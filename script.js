@@ -120,3 +120,100 @@
 //     .then((username) => {
 //         console.log('email sent to, ', username)
 //     })
+
+// product delivery
+
+// function orderProduct() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve('Product ordered successfully')
+//         }, 1000);
+//     })
+// }
+
+// function prepareProduct() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve('Order prepared successfully')
+//         }, 1000);
+//     })
+// }
+
+// function shipProduct() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve('Product shipped successfully')
+//         }, 1000);
+//     })
+// }
+
+// function deliveryProduct() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve('Product delivered successfully')
+//         }, 1000);
+//     })
+// }
+
+// orderProduct().then((data) => {
+//     console.log(data)
+//     return prepareProduct()
+// })
+//     .then((data) => {
+//         console.log(data);
+//         return shipProduct()
+
+//     })
+//     .then((data) => {
+//         console.log(data);
+//         return deliveryProduct()
+
+//     })
+//     .then((data) => {
+//         console.log(data);
+//     })
+
+// fetch users
+function fetchUser(userId) {
+    return new Promise((resolve, reject) => {
+        fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    reject('Error in fetching user data');
+                } else {
+                    return response.json();
+                }
+            })
+            .then(data => resolve(data))
+            .catch(error => reject(error));
+    });
+}
+
+function fetchUserPost(userId) {
+    return new Promise((resolve, reject) => {
+        fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    reject('Error in fetching post data');
+                } else {
+                    return response.json();
+                }
+            })
+            .then(data => resolve(data))
+            .catch(error => reject(error));
+    });
+}
+
+const userId = 1;
+
+fetchUser(userId)
+    .then(userData => {
+        console.log('User data:', userData);
+        return fetchUserPost(userId);
+    })
+    .then(postsData => {
+        console.log('User posts:', postsData);
+    })
+    .catch(error => {
+        console.log(error);
+    });
